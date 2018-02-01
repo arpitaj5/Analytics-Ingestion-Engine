@@ -23,5 +23,5 @@ for filename in prefixed:
 
 fh = open("srv/runme/"+prefix+".txt", "w")
 for i in range(len(name)):
-	fh.write(name[i] + "	" + str(age[i])+"\n")
+	fh.write(name[i] + "\t" + str(age[i])+"\n")
 fh.close()
