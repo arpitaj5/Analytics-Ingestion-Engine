@@ -22,7 +22,7 @@ for filename in prefixed:
 		name.append(datastore[i]['name'])
 		age.append(datastore[i]['prop']['age'])
 
-fh = open("srv/runme/"+prefix+".txt", "w")
+fh = open("/srv/runme/"+prefix+".txt", "w")
 for i in range(len(name)):
 	fh.write(name[i] + "\t" + str(age[i])+"\n")
 fh.close()
