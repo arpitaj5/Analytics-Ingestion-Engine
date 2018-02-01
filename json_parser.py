@@ -24,11 +24,11 @@ for filename in prefixed:
         name.append(datastore[i]['name'])
         age.append(datastore[i]['prop']['age'])
 
-fh = open(prefix+".txt", "w")
+fh = open('/home/ec2-user/Analytics-Ingestion-Engine/'+prefix+".txt", "w")
 for i in range(len(name)):
     fh.write(name[i] + "\t" + str(age[i])+"\n")
 fh.close()
 
 
 
-os.system('sudo mv ' + prefix + '.txt /srv/runme/')
+os.system('sudo mv /home/ec2-user/Analytics-Ingestion-Engine/' + prefix + '.txt /srv/runme/')

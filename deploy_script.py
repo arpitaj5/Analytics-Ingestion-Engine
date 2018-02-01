@@ -18,8 +18,8 @@ def deploy(path, server, prefix):
   ssh.exec_command("crontab -r") # Removing existing crontabs
 
   print "setting crontab"
-  new_command = "1 * * * * python /home/ec2-user/Analytics-Ingestion-Engine/json_parser.py " + prefix
+  new_command = "5 * * * * python /home/ec2-user/Analytics-Ingestion-Engine/json_parser.py " + prefix
   print new_command
   ssh.exec_command('(crontab -l ; echo "' + new_command + '" ) | crontab -')
 
-deploy('asmitavi_oregon_deeplearning.pem', 'ec2-52-32-29-124.us-west-2.compute.amazonaws.com', 'usf')
+deploy('/Users/Asmita/Desktop/asmitavi_oregon_deeplearning.pem', 'ec2-52-32-29-124.us-west-2.compute.amazonaws.com', 'usf')
