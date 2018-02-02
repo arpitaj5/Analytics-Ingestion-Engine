@@ -3,6 +3,7 @@ import json
 import sys
 prefix = sys.argv[1]
 
+
 print "checking files with prefix"
 prefixed = [filename for filename in os.listdir('/srv/runme') if filename.startswith(prefix)]
 
@@ -13,22 +14,25 @@ if not prefixed:
 
 name = list()
 age = list()
+
 for filename in prefixed:
     with open('/srv/runme/'+filename, 'r') as f:
         try:
-            datastore = json.load(f)
+            file = f.readlines()
         except:
             pass
-    print len(datastore)
-    for i in range(len(datastore)):
-        name.append(datastore[i]['name'])
-        age.append(datastore[i]['prop']['age'])
+    print len(file)
+    for line in file:
+        try:
+            j_line = json.loads(line)
+            name.append(j_line['name'])
+            age.append(j_line['prop']['age'])
+        except:
+            pass
 
 fh = open('/home/ec2-user/Analytics-Ingestion-Engine/'+prefix+".txt", "w")
 for i in range(len(name)):
     fh.write(name[i] + "\t" + str(age[i])+"\n")
 fh.close()
-
-
 
 os.system('sudo mv /home/ec2-user/Analytics-Ingestion-Engine/' + prefix + '.txt /srv/runme/')
