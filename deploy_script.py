@@ -1,5 +1,11 @@
 import os
 import paramiko
+import sys
+
+pem_file = sys.argv[1]
+server = sys.argv[2]
+prefix = sys.argv[3]
+
 
 def deploy(path, server, prefix):
 
@@ -12,6 +18,7 @@ def deploy(path, server, prefix):
   # clone git
   print "cloning git"
   ssh.exec_command("rm -rf Analytics-Ingestion-Engine; git clone https://github.com/asmitav/Analytics-Ingestion-Engine.git")
+  ssh.exec_command("cd Analytics-Ingestion-Engine; git checkout json_parser_nishan2")
   print "cloned git"
 
   print "crontab remove"
@@ -22,4 +29,4 @@ def deploy(path, server, prefix):
   print new_command
   ssh.exec_command('(crontab -l ; echo "' + new_command + '" ) | crontab -')
 
-deploy('/Users/Asmita/Desktop/asmitavi_oregon_deeplearning.pem', 'ec2-52-32-29-124.us-west-2.compute.amazonaws.com', 'usf')
+deploy(pem_file, server, prefix)

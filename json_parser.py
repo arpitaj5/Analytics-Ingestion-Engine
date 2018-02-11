@@ -35,4 +35,4 @@ for i in range(len(name)):
     fh.write(name[i] + "\t" + str(age[i])+"\n")
 fh.close()
 
-os.system('sudo mv /home/ec2-user/Analytics-Ingestion-Engine/' + prefix + '.txt /srv/runme/')
+os.system('mv /home/ec2-user/Analytics-Ingestion-Engine/' + prefix + '.txt /srv/runme/')
