@@ -27,7 +27,7 @@ except:
     print "Error: No argument passed!!"
 
 if os.path.exists(PATH):
-    json_files = [filename for filename in os.listdir('/srv/runme') if filename.startswith(prefix)]
+    json_files = [filename for filename in os.listdir(PATH) if filename.startswith(prefix)]
 
     if len(json_files) == 0:
         print "No file starts with this name"
