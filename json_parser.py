@@ -1,34 +1,50 @@
 import os
 import json
 import sys
-prefix = sys.argv[1]
+from os.path import expanduser
 
-print "checking files with prefix"
-prefixed = [filename for filename in os.listdir('/srv/runme') if filename.startswith(prefix)]
+def extract_info(line, text_file):
+    """
+    For each json blob extract name and age and write them to the given file
 
-# if there are no files with prefix name. Exit code
-if not prefixed:
-    print "No file starts with this name"
-    exit()
+    rtype: None
+    """
+    json_text = json.loads(line)
+    try:
+        name = json_text['name']
+        age = json_text['prop']['age']
+        if name != '' and age != '':
+            text_file.write(str(name) + "\t" + str(age) + '\n')
+        else: pass
+    except: pass
 
-name = list()
-age = list()
-for filename in prefixed:
-    with open('/srv/runme/'+filename, 'r') as f:
-        try:
-            datastore = json.load(f)
-        except:
-            pass
-    print len(datastore)
-    for i in range(len(datastore)):
-        name.append(datastore[i]['name'])
-        age.append(datastore[i]['prop']['age'])
+# run script
+PATH = "/srv/runme/"
 
-fh = open('/home/ec2-user/Analytics-Ingestion-Engine/'+prefix+".txt", "w")
-for i in range(len(name)):
-    fh.write(name[i] + "\t" + str(age[i])+"\n")
-fh.close()
+try:
+    prefix = sys.argv[1]
+except:
+    print "Error: No argument passed!!"
 
+if os.path.exists(PATH):
+    json_files = [filename for filename in os.listdir('/srv/runme') if filename.startswith(prefix)]
 
+    if len(json_files) == 0:
+        print "No file starts with this name"
+        exit(0)
 
-os.system('sudo mv /home/ec2-user/Analytics-Ingestion-Engine/' + prefix + '.txt /srv/runme/')
+    with open(PATH + str(prefix) + '.txt', 'w') as text_file:
+
+        for filename in json_files:
+
+            with open(PATH + str(filename), 'r') as f:
+                for line in f:
+                    try:
+                        extract_info(line, text_file)
+
+                    except:
+                        pass
+    text_file.close()
+else: 
+    print("Directory " + PATH + " does not exist")
+
