@@ -13,7 +13,7 @@ def extract_info(line, text_file):
     try:
         name = json_text['name']
         age = json_text['prop']['age']
-        if name != '' and age != '':
+        if (name != '') and (age != '') and (int(age) > 0):
             text_file.write(str(name) + "\t" + str(age) + '\n')
         else: pass
     except: pass
