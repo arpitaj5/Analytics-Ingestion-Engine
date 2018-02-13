@@ -18,7 +18,6 @@ def deploy(path, server, prefix):
   print "Connected to server"
 
   # clone git
-  ssh.exec_command("yum install git -y")
   print "cloning git"
   ssh.exec_command("rm -rf Analytics-Ingestion-Engine; git clone https://github.com/asmitav/Analytics-Ingestion-Engine.git")
   print "cloned git"
