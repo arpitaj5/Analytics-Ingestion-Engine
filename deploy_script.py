@@ -14,7 +14,7 @@ def deploy(path, server, prefix):
   ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
   print server
   print path
-  ssh.connect(server, username = 'ec2-user', key_filename = path)
+  ssh.connect(server, username = 'testtest', key_filename = path)
   print "Connected to server"
 
   # clone git
@@ -27,7 +27,7 @@ def deploy(path, server, prefix):
   ssh.exec_command("crontab -r") # Removing existing crontabs
 
   print "setting crontab"
-  new_command = "5 * * * * python /home/ec2-user/Analytics-Ingestion-Engine/json_parser.py " + prefix
+  new_command = "5 * * * * python /home/testtest/Analytics-Ingestion-Engine/json_parser.py " + prefix
   print new_command
   ssh.exec_command('(crontab -l ; echo "' + new_command + '" ) | crontab -')
 

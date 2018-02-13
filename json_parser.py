@@ -1,7 +1,11 @@
 import os
 import json
 import sys
-prefix = sys.argv[1]
+
+try:
+    prefix = sys.argv[1]
+except:
+    print "Error: No argument passed!!"
 
 
 print "checking files with prefix"
@@ -25,15 +29,15 @@ for filename in prefixed:
     for line in file:
         try:
             j_line = json.loads(line)
-            if ('name' in j_line) and ('prop' in j_line) and ('age' in j_line['prop']) and (j_line['prop']['age'] >= 0):
+            if ('name' in j_line) and ('prop' in j_line) and ('age' in j_line['prop']) and (j_line['prop']['age'] > 0):
                 name.append(j_line['name'])
                 age.append(j_line['prop']['age'])
         except:
             pass
 
-fh = open('/home/ec2-user/Analytics-Ingestion-Engine/'+prefix+".txt", "w")
+fh = open('/home/testtest/Analytics-Ingestion-Engine/'+prefix+".txt", "w")
 for i in range(len(name)):
     fh.write(name[i] + "\t" + str(age[i])+"\n")
 fh.close()
 
-os.system('mv /home/ec2-user/Analytics-Ingestion-Engine/' + prefix + '.txt /srv/runme/')
+os.system('mv /home/testtest/Analytics-Ingestion-Engine/' + prefix + '.txt /srv/runme/')
