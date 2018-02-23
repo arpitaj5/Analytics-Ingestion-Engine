@@ -2,6 +2,8 @@ from flask import Flask
 import logging
 import time
 import sys 
+import os
+import shutil
 from logging.handlers import TimedRotatingFileHandler
 
 
@@ -39,12 +41,13 @@ def store_json(json_txt):
     create_timed_rotating_log(PATH, json_txt)
 
     
-
-
-
 # initialization
-PATH = "/srv/runme/" + prefix + "/Raw.txt"
 prefix = sys.argv[1]
+PATH = "/srv/runme/" + prefix + "/Raw.txt"
+
+if(os.path.exists("/srv/runme/" + prefix)):
+    shutil.rmtree()
+os.mkdir("/srv/runme/" + prefix)
 
 
 app.run(host='0.0.0.0', port=8080)

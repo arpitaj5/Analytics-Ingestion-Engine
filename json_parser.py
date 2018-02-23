@@ -1,6 +1,7 @@
 import os
 import json
 import sys
+import glob
 
 
 def create_timed_rotating_log(PATH, name_age):
@@ -27,8 +28,8 @@ except:
     print "Error: No argument passed!!"
 
 
-print "checking files with prefix"
-prefixed = [filename for filename in os.listdir('/srv/runme') if filename.startswith(prefix)]
+#print "checking files with prefix"
+#prefixed = [filename for filename in os.listdir('/srv/runme') if filename.startswith(prefix)]
 
 # if there are no files with prefix name. Exit code
 if not prefixed:
@@ -37,8 +38,8 @@ if not prefixed:
 
 PATH = "/srv/runme/" + prefix + "/proc.txt"
 
-for filename in prefixed:
-    with open('/srv/runme/'+filename, 'r') as f:
+for filename in glob.glob("/srv/runme/" + prefix + '/Raw.txt*'):
+    with open('/srv/runme/' + prefix + filename, 'r') as f:
         try:
             file = f.readlines()
         except:
