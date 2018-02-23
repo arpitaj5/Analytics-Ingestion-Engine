@@ -26,9 +26,11 @@ def deploy(path, server, prefix):
   ssh.exec_command("crontab -r") # Removing existing crontabs
 
   print "setting crontab"
-  new_command = "5 * * * * python /home/testtest/Analytics-Ingestion-Engine/json_parser.py " + prefix
+  new_command = "*/5 * * * * python /home/testtest/Analytics-Ingestion-Engine/json_parser.py " + prefix
   print new_command
   ssh.exec_command('(crontab -l ; echo "' + new_command + '" ) | crontab -')
+  
+  ssh.exec_command('python /home/testtest/Analytics-Ingestion-Engine/flask_server.py ' + prefix )
 
   ssh.exec_command('logout')
 
