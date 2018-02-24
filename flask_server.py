@@ -15,7 +15,7 @@ PATH = dir + "/Raw.txt"
 
 if(os.path.exists(dir)):
     shutil.rmtree(dir)
-os.mkdir(dir
+os.mkdir(dir)
 
 logging_level = logging.DEBUG
 formatter = logging.Formatter()
