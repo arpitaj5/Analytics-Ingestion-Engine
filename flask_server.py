@@ -49,8 +49,7 @@ logger.setLevel(logging.INFO)
      
 handler = TimedRotatingFileHandler(PATH,
                                     when="m",
-                                    interval=2,
-                                    backupCount=5)
+                                    interval=2)
 logger.addHandler(handler)
 
 app.run(host='0.0.0.0', port=8080)

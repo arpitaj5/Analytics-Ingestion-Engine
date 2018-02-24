@@ -45,8 +45,8 @@ logger = logging.getLogger("Rotating Log")
 logger.setLevel(logging.INFO)
 handler = TimedRotatingFileHandler(PATH,
                                        when="m",
-                                       interval=2,
-                                       backupCount=5)
+                                       interval=2
+                                       )
 logger.addHandler(handler)
 
 for filename in glob.glob("/srv/runme/" + prefix + "/*"):
