@@ -35,8 +35,8 @@ logger.setLevel(logging_level)
 def store_json(json_txt):
     json_txt = json_txt.replace('\n', '')
     logger.debug(json_txt)
-
-    return json_txt
+    json_txt = ''
+    return "whatever"
 
 
 
