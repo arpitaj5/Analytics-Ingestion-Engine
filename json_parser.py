@@ -14,7 +14,6 @@ if glob.glob(PATH+"*") != []:
     for f in glob.glob(PATH+"*"):
         os.remove(f)
 
-
 logging_level = logging.DEBUG
 formatter = logging.Formatter()
 handler = logging.handlers.TimedRotatingFileHandler(PATH, when="M", interval=2, backupCount=10)
@@ -23,7 +22,7 @@ logger = logging.getLogger("Rotating Log")
 logger.addHandler(handler)
 logger.setLevel(logging_level)
 
-
+name_age = []
 files = [filename for filename in glob.glob(dir + "/*") if 'Raw.txt' in filename]
 for filename in files:
     with open(filename, 'r') as f:
@@ -32,7 +31,6 @@ for filename in files:
         except:
             print('Bad input!!')
 
-    name_age = []
     for line in file:
         try:
             j_line = json.loads(line)
@@ -42,6 +40,6 @@ for filename in files:
                 name_age.append(name + "\t" + str(age))
         except:
             pass
-    with open(PATH, 'a'):
-        for name_age_str in name_age:
-            logger.debug(name_age_str)
+with open(PATH, 'a'):
+    for name_age_str in name_age:
+        logger.debug(name_age_str)
