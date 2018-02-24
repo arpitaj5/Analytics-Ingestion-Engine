@@ -36,7 +36,7 @@ def store_json(json_txt):
     json_txt = json_txt.replace('\n', '')
     logger.debug(json_txt)
 
-    return "Thanks for visiting!"
+    return json_txt
 
 
 
