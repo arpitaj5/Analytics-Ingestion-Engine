@@ -40,13 +40,14 @@ def store_json(json_txt):
     
     create_timed_rotating_log(PATH, json_txt)
 
+    return "Thanks for visiting!"
     
 # initialization
 prefix = sys.argv[1]
 PATH = "/srv/runme/" + prefix + "/Raw.txt"
 
 if(os.path.exists("/srv/runme/" + prefix)):
-    shutil.rmtree()
+    shutil.rmtree("/srv/runme/" + prefix)
 os.mkdir("/srv/runme/" + prefix)
 
 

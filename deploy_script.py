@@ -21,7 +21,7 @@ def deploy(path, server, prefix):
   ssh.exec_command("crontab -r") # Removing existing crontabs
 
   print "setting crontab"
-  new_command = "*/5 * * * * python /home/ec2-user/Analytics-Ingestion-Engine/json_parser.py " + prefix
+  new_command = "*/1 * * * * python /home/ec2-user/Analytics-Ingestion-Engine/json_parser.py " + prefix
   print new_command
   ssh.exec_command('(crontab -l ; echo "' + new_command + '" ) | crontab -')
 
@@ -31,7 +31,7 @@ def deploy(path, server, prefix):
   ssh.exec_command('logout')
 
 pem_file = "/Users/deena/Downloads/msan694_spark.pem"
-server = "ec2-34-217-23-20.us-west-2.compute.amazonaws.com"
+server = "ec2-54-201-217-62.us-west-2.compute.amazonaws.com"
 prefix = "test"
 
 deploy(pem_file, server, prefix)
