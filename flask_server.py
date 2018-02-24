@@ -34,8 +34,8 @@ logger.setLevel(logging_level)
 @app.route("/<json_txt>")
 def store_json(json_txt):
     json_txt = json_txt.replace('\n', '')
-    logger.debug(json_txt)
-    json_txt = ''
+    with open(PATH, 'a'):
+        logger.debug(json_txt)
     return "whatever"
 
 
