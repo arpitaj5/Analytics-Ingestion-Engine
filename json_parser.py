@@ -7,22 +7,11 @@ import time
  
 from logging.handlers import TimedRotatingFileHandler
 
-def create_timed_rotating_log(PATH, name_age):
+def create_timed_rotating_log(name_age):
     """
     PATH: global variable - 
     
     """
-    print "test"
-    logger = logging.getLogger("Rotating Log")
-    logger.setLevel(logging.INFO)
-    print PATH
-    handler = TimedRotatingFileHandler(PATH,
-                                       when="m",
-                                       interval=2,
-                                       backupCount=5)
-    logger.addHandler(handler)
-    
-    print PATH + name_age
     logger.info(name_age)
 
 
@@ -51,6 +40,15 @@ if glob.glob(PATH+"*") != []:
     for f in glob.glob(PATH+"*"):
         os.remove(f)
 
+
+logger = logging.getLogger("Rotating Log")
+logger.setLevel(logging.INFO)
+handler = TimedRotatingFileHandler(PATH,
+                                       when="m",
+                                       interval=2,
+                                       backupCount=5)
+logger.addHandler(handler)
+
 for filename in glob.glob("/srv/runme/" + prefix + "/*"):
     print filename
     if 'Raw.txt' in filename:
@@ -69,7 +67,7 @@ for filename in glob.glob("/srv/runme/" + prefix + "/*"):
                     
                     name_age = j_line['name'] + "\t" + str(j_line['prop']['age'])+"\n"
                     print name_age
-                    create_timed_rotating_log(PATH, name_age)
+                    create_timed_rotating_log(name_age)
                     
             except:
                 pass
