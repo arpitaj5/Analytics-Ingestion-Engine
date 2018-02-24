@@ -18,14 +18,6 @@ def create_timed_rotating_log(PATH, json_txt):
     """
     
     """
-    logger = logging.getLogger("Rotating Log")
-    logger.setLevel(logging.INFO)
- 
-    handler = TimedRotatingFileHandler(PATH,
-                                       when="m",
-                                       interval=2,
-                                       backupCount=5)
-    logger.addHandler(handler)
  
     logger.info(json_txt)
 
@@ -52,5 +44,13 @@ if(os.path.exists("/srv/runme/" + prefix)):
     shutil.rmtree("/srv/runme/" + prefix)
 os.mkdir("/srv/runme/" + prefix)
 
+logger = logging.getLogger("Rotating Log")
+logger.setLevel(logging.INFO)
+     
+handler = TimedRotatingFileHandler(PATH,
+                                    when="m",
+                                    interval=2,
+                                    backupCount=5)
+logger.addHandler(handler)
 
 app.run(host='0.0.0.0', port=8080)
