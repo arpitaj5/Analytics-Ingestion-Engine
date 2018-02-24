@@ -38,22 +38,23 @@ if not prefixed:
 
 PATH = "/srv/runme/" + prefix + "/proc.txt"
 
-for filename in glob.glob("/srv/runme/" + prefix + '/Raw.txt*'):
-    with open('/srv/runme/' + prefix + filename, 'r') as f:
-        try:
-            file = f.readlines()
-        except:
-            pass
-    print len(file)
-    for line in file:
-        try:
-            j_line = json.loads(line)
-            if ('name' in j_line) and ('prop' in j_line) and ('age' in j_line['prop']) and (j_line['prop']['age'] > 0):
-
-                name_age = j_line['name'] + "\t" + str(j_line['prop']['age'])+"\n"
-                create_timed_rotating_log(PATH, name_age)
-        except:
-            pass
+for filename in glob.glob("/srv/runme/" + prefix):
+    if 'Raw.txt' in filename:
+        with open('/srv/runme/' + prefix + filename, 'r') as f:
+            try:
+                file = f.readlines()
+            except:
+                pass
+        print len(file)
+        for line in file:
+            try:
+                j_line = json.loads(line)
+                if ('name' in j_line) and ('prop' in j_line) and ('age' in j_line['prop']) and (j_line['prop']['age'] > 0):
+    
+                    name_age = j_line['name'] + "\t" + str(j_line['prop']['age'])+"\n"
+                    create_timed_rotating_log(PATH, name_age)
+            except:
+                pass
 
 
 #os.system('mv /home/testtest/Analytics-Ingestion-Engine/' + prefix + '.txt /srv/runme/')
