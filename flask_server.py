@@ -21,7 +21,7 @@ logging_level = logging.DEBUG
 
 formatter = logging.Formatter()
 
-handler = logging.handlers.TimedRotatingFileHandler(PATH, when="S", interval=2, backupCount=10)
+handler = logging.handlers.TimedRotatingFileHandler(PATH, when="M", interval=2, backupCount=10)
 
 handler.setFormatter(formatter)
 
@@ -36,7 +36,7 @@ def store_json(json_txt):
     json_txt = json_txt.replace('\n', '')
     with open(PATH, 'a'):
         logger.debug(json_txt)
-    return "whatever"
+    return "testing"
 
 
 

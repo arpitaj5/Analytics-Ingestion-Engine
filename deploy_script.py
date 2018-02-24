@@ -32,7 +32,7 @@ def deploy(path, server, prefix):
   ssh.exec_command('logout')
 
 pem_file = "/Users/deena/Downloads/msan694_spark.pem"
-server = "ec2-54-201-217-62.us-west-2.compute.amazonaws.com"
+server = "ec2-54-200-214-121.us-west-2.compute.amazonaws.com"
 prefix = "test"
 
 deploy(pem_file, server, prefix)
