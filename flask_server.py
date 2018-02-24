@@ -9,47 +9,35 @@ from logging.handlers import TimedRotatingFileHandler
 
 app = Flask(__name__)
 
-#/srv/runme/prefix/Raw.txt
-
-
-
-
-def create_timed_rotating_log(PATH, json_txt):
-    """
-    
-    """
- 
-    logger.info(json_txt)
-
-
-
-@app.route("/<json_txt>")
-def store_json(json_txt):
-    """
-
-    """
-    json_txt = json_txt.replace('\n', '')
-    
-    create_timed_rotating_log(PATH, json_txt)
-
-    return "Thanks for visiting!"
-    
-# initialization
 prefix = sys.argv[1]
 PATH = "/srv/runme/" + prefix + "/Raw.txt"
 
-print PATH
 
 if(os.path.exists("/srv/runme/" + prefix)):
     shutil.rmtree("/srv/runme/" + prefix)
 os.mkdir("/srv/runme/" + prefix)
 
-logger = logging.getLogger("Rotating Log")
-logger.setLevel(logging.INFO)
-     
-handler = TimedRotatingFileHandler(PATH,
-                                    when="m",
-                                    interval=2)
+logging_level = logging.DEBUG
+
+formatter = logging.Formatter()
+
+handler = logging.handlers.TimedRotatingFileHandler(PATH, when="S", interval=2, backupCount=10)
+
+handler.setFormatter(formatter)
+
+logger = logging.getLogger() # or pass string to give it a name
+
 logger.addHandler(handler)
+
+logger.setLevel(logging_level)
+
+@app.route("/<json_txt>")
+def store_json(json_txt):
+    json_txt = json_txt.replace('\n', '')
+    logger.debug(json_txt)
+
+    return "Thanks for visiting!"
+
+
 
 app.run(host='0.0.0.0', port=8080)
