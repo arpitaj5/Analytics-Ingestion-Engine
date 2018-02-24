@@ -46,6 +46,8 @@ def store_json(json_txt):
 prefix = sys.argv[1]
 PATH = "/srv/runme/" + prefix + "/Raw.txt"
 
+print PATH
+
 if(os.path.exists("/srv/runme/" + prefix)):
     shutil.rmtree("/srv/runme/" + prefix)
 os.mkdir("/srv/runme/" + prefix)
