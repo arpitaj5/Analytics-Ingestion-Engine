@@ -2,23 +2,27 @@ import os
 import json
 import sys
 import glob
-
+import logging
+import time
+ 
+from logging.handlers import TimedRotatingFileHandler
 
 def create_timed_rotating_log(PATH, name_age):
     """
     PATH: global variable - 
     
     """
+    print "test"
     logger = logging.getLogger("Rotating Log")
     logger.setLevel(logging.INFO)
- 
+    print PATH
     handler = TimedRotatingFileHandler(PATH,
                                        when="m",
                                        interval=2,
                                        backupCount=5)
     logger.addHandler(handler)
     
- 
+    print PATH + name_age
     logger.info(name_age)
 
 
@@ -32,15 +36,26 @@ except:
 #prefixed = [filename for filename in os.listdir('/srv/runme') if filename.startswith(prefix)]
 
 # if there are no files with prefix name. Exit code
-if not prefixed:
-    print "No file starts with this name"
-    exit()
+#if not prefixed:
+ #   print "No file starts with this name"
+  #  exit()
 
 PATH = "/srv/runme/" + prefix + "/proc.txt"
 
-for filename in glob.glob("/srv/runme/" + prefix):
+print "/srv/runme/" + prefix
+#print glob.glob("/srv/runme/" + prefix)
+
+#if(os.path.exists(PATH+"*")):
+
+if glob.glob(PATH+"*") != []:
+    for f in glob.glob(PATH+"*"):
+        os.remove(f)
+
+for filename in glob.glob("/srv/runme/" + prefix + "/*"):
+    print filename
     if 'Raw.txt' in filename:
-        with open('/srv/runme/' + prefix + filename, 'r') as f:
+        print "Found file" + filename
+        with open(filename, 'r') as f:
             try:
                 file = f.readlines()
             except:
@@ -49,10 +64,13 @@ for filename in glob.glob("/srv/runme/" + prefix):
         for line in file:
             try:
                 j_line = json.loads(line)
+                print j_line
                 if ('name' in j_line) and ('prop' in j_line) and ('age' in j_line['prop']) and (j_line['prop']['age'] > 0):
-    
+                    
                     name_age = j_line['name'] + "\t" + str(j_line['prop']['age'])+"\n"
+                    print name_age
                     create_timed_rotating_log(PATH, name_age)
+                    
             except:
                 pass
 
