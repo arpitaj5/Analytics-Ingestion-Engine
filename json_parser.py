@@ -34,31 +34,15 @@ def main():
 
 
     logging_level = logging.DEBUG
-
     formatter = logging.Formatter()
-
     handler = logging.handlers.TimedRotatingFileHandler(PATH, when="M", interval=2, backupCount=10)
-
     handler.setFormatter(formatter)
-
     logger = logging.getLogger("Rotating Log") # or pass string to give it a name
-
     logger.addHandler(handler)
-
     logger.setLevel(logging_level)
-
-    '''
-    logger = logging.getLogger("Rotating Log")
-    logger.setLevel(logging.INFO)
-    handler = TimedRotatingFileHandler(PATH,
-                                        when="m",
-                                        interval=2)
-    logger.addHandler(handler)
-    '''
+:
     for filename in glob.glob("/srv/runme/" + prefix + "/*"):
-        print filename
         if 'Raw.txt' in filename:
-            print "Found file" + filename
             with open(filename, 'r') as f:
                 try:
                     file = f.readlines()
@@ -68,12 +52,10 @@ def main():
             for line in file:
                 try:
                     j_line = json.loads(line)
-                    print j_line
                     if ('name' in j_line) and ('prop' in j_line) and ('age' in j_line['prop']) and (j_line['prop']['age'] > 0):
                         
                         name_age = j_line['name'] + "\t" + str(j_line['prop']['age'])
                         with open(PATH, 'a'):
-                            print name_age
                             logger.debug(name_age)                   
                 except:
                     pass
