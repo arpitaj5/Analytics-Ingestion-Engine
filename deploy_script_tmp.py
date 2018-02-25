@@ -20,6 +20,10 @@ def deploy(path, server, prefix):
   print "crontab remove"
   ssh.exec_command("crontab -r") # Removing existing crontabs
 
+  print "setting crontab"
+  new_command = "*/5 * * * * python /home/ec2-user/Analytics-Ingestion-Engine/json_parser.py " + prefix
+  print new_command
+  ssh.exec_command('(crontab -l ; echo "' + new_command + '" ) | crontab -')
 
   print "Launch server"
   ssh.exec_command('sudo chmod -R ugo+rw /srv/runme')
