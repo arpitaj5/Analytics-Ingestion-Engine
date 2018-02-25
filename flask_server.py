@@ -1,10 +1,11 @@
 from flask import Flask
 import logging
 import time
-import sys 
+import sys
 import os
 import shutil
 from logging.handlers import TimedRotatingFileHandler
+import json
 
 app = Flask(__name__)
 
@@ -18,41 +19,40 @@ if(os.path.exists(dir)):
     shutil.rmtree(dir)
 os.mkdir(dir)
 
-logging_level = logging.DEBUG
-formatter = logging.Formatter()
+logging_level_raw = logging.DEBUG
+logging_level_parsed = logging.DEBUG
 
-handler_raw = logging.handlers.TimedRotatingFileHandler(PATH_RAW, when="M", interval=2, backupCount=10)
-handler_parsed = logging.handlers.TimedRotatingFileHandler(PATH_PARSED, when="M", interval=2, backupCount=10)
+logger_raw = logging.getLogger('raw file')
+logger_parsed = logging.getLogger('parsed file')
 
-handler_raw.setFormatter(formatter)
-handler_parsed.setFormatter(formatter)
+log_handler_raw = logging.handlers.TimedRotatingFileHandler(PATH_RAW, when="M", interval=2, backupCount=10)
+log_handler_parsed = logging.handlers.TimedRotatingFileHandler(PATH_PARSED, when="M", interval=2, backupCount=10)
 
-logger_raw = logging.getLogger() 
-logger_raw.addHandler(handler_raw)
-logger_raw.setLevel(logging_level)
+logger_raw.addHandler(log_handler_raw)
+logger_parsed.addHandler(log_handler_parsed)
 
-logger_parsed = logging.getLogger() 
-logger_parsed.addHandler(handler_parsed)
-logger_parsed.setLevel(logging_level)
+
+logger_raw.setLevel(logging_level_raw)
+logger_parsed.setLevel(logging_level_parsed)
+
+
 
 @app.route("/<json_txt>")
 def store_json(json_txt):
     json_txt = json_txt.replace('\n', '')
-    with open(PATH, 'a'):
+    with open(PATH_RAW, 'a'):
         logger_raw.debug(json_txt)
-
-    name_age = []
     try:
-    	j_line = json.loads(line)
+        j_line = json.loads(json_txt)
         name = j_line['name']
         age = j_line['prop']['age']
         if (age > 0):
-            logger_parsed.debug(name + "\t" + str(age))
+            with open(PATH_PARSED, 'a'):
+                logger_parsed.debug(name + "\t" + str(age))
     except:
-    	pass
-        
-    return "testing"
+        pass
 
+    return ""
 
 
 app.run(host='0.0.0.0', port=8080)
