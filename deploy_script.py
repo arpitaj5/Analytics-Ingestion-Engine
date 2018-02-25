@@ -3,7 +3,10 @@ import paramiko
 import sys
 
 def deploy(path, server, prefix):
-
+  """
+	the code connects to the EC2 server and clones the git repo.
+	the code then starts the flask server
+  """
   print "Connecting to box"
   ssh = paramiko.SSHClient()
   ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -27,8 +30,8 @@ def deploy(path, server, prefix):
   print "Server launched"
   ssh.exec_command('logout')
 
-pem_file = "/Users/Asmita/.ssh/asmitavi_oregon_deeplearning.pem"
-server = "ec2-54-218-82-213.us-west-2.compute.amazonaws.com"
-prefix = "test"
+# pem_file = "/Users/Asmita/.ssh/asmitavi_oregon_deeplearning.pem"
+# server = "ec2-54-218-82-213.us-west-2.compute.amazonaws.com"
+# prefix = "test"
 
 deploy(pem_file, server, prefix)
