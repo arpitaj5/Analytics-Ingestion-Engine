@@ -37,6 +37,9 @@ for filename in files:
             name = j_line['name']
             age = j_line['prop']['age']
             if (age > 0):
-                logger.debug(name + "\t" + str(age))
+                name_age.append(name + "\t" + str(age))
         except:
             pass
+with open(PATH, 'a'):
+    for name_age_str in name_age:
+        logger.debug(name_age_str)
