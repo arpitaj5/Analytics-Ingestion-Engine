@@ -9,9 +9,9 @@ import json
 
 
 """
-	Code is used to take input from user as a GET request.
-	We then store the request in a Raw file.
-	If we have a valid JSON request, we also store the parsed result in proc.txt
+Code is used to take input from user as a GET request.
+We then store the request in a Raw file.
+If we have a valid JSON request, we also store the parsed result in proc.txt
 """
 
 app = Flask(__name__)
@@ -21,7 +21,7 @@ dir = "/srv/runme/" + prefix
 PATH_RAW = dir + "/Raw.txt" # raw input
 PATH_PARSED = dir + "/proc.txt" # processed input
 
-# creating firectory
+# creating directory
 if(os.path.exists(dir)):
     shutil.rmtree(dir)
 os.mkdir(dir)
@@ -62,15 +62,15 @@ def store_json(json_txt):
         name = j_line['name']
         age = j_line['prop']['age']
         # if valid age
-	if (age > 0):
+	    if (age > 0):
             with open(PATH_PARSED, 'a'):
                 logger_parsed.debug(name + "\t" + str(age)) # store in processed
     except KeyError:
-	print "KeyError"
+	    print "KeyError"
       	pass
     except ValueError:
-	print "ValueError"
-	pass
+	    print "ValueError"
+	    pass
 
     return ""
 
