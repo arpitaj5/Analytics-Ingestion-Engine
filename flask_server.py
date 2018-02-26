@@ -62,15 +62,15 @@ def store_json(json_txt):
         name = j_line['name']
         age = j_line['prop']['age']
         # if valid age
-	    if (age > 0):
+        if (age > 0):
             with open(PATH_PARSED, 'a'):
                 logger_parsed.debug(name + "\t" + str(age)) # store in processed
     except KeyError:
-	    print "KeyError"
-      	pass
+        print "KeyError"
+        pass
     except ValueError:
-	    print "ValueError"
-	    pass
+        print "ValueError"
+        pass
 
     return ""
 
